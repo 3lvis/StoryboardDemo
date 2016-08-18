@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
         let controller = masterNavigationController.topViewController as! MasterViewController
         controller.dataStack = self.dataStack
+
         return true
     }
 
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         if topAsDetailController.detailItem == nil {
             return true
         }
+
         return false
     }
 }
