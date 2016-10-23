@@ -1,9 +1,10 @@
 import UIKit
+import CoreData
 
 class DetailViewController: UIViewController {
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
-    var detailItem: AnyObject? {
+    var detailItem: NSManagedObject? {
         didSet {
             self.configureView()
         }
@@ -12,7 +13,7 @@ class DetailViewController: UIViewController {
     func configureView() {
         if let detail = self.detailItem {
             if let label = self.detailDescriptionLabel {
-                label.text = detail.valueForKey("timeStamp")!.description
+                label.text = detail.value(forKey: "timeStamp").debugDescription
             }
         }
     }
