@@ -12,7 +12,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         request.sortDescriptors = [NSSortDescriptor(key: "timeStamp", ascending: false)]
 
         let object = DATASource(tableView: self.tableView!, cellIdentifier: "Cell", fetchRequest: request, mainContext: self.dataStack!.mainContext) { cell, item, indexPath in
-            cell.textLabel?.text = item.value(forKey: "timeStamp").debugDescription
+            let timeStamp = item.value(forKey: "timeStamp") as! Date
+            cell.textLabel?.text = timeStamp.debugDescription
         }
 
         object.delegate = self
@@ -27,22 +28,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject))
 
         self.tableView.dataSource = self.dataSource
-
-        if let split = self.splitViewController {
-            self.detailViewController = (split.viewControllers.first as! UINavigationController).topViewController as? DetailViewController
-        }
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
-
-        super.viewWillAppear(animated)
     }
 
     func insertNewObject() {
         self.dataStack?.performBackgroundTask { backgroundContext in
             let newManagedObject = NSEntityDescription.insertNewObject(forEntityName: "Event", into: backgroundContext)
-            newManagedObject.setValue(NSDate(), forKey: "timeStamp")
+            newManagedObject.setValue(Date(), forKey: "timeStamp")
 
             do {
                 try backgroundContext.save()
@@ -58,8 +49,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 let object = self.dataSource.object(indexPath)
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
             }
         }
     }
