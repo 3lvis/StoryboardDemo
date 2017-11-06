@@ -1,6 +1,6 @@
 use_frameworks!
 
 target 'Project' do
-  pod 'DATAStack'
+  pod 'Sync'
   pod 'DATASource'
 end

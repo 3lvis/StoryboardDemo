@@ -1,10 +1,10 @@
 import UIKit
-import DATAStack
+import Sync
 import DATASource
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     var detailViewController: DetailViewController? = nil
-    weak var dataStack: DATAStack?
+    weak var dataStack: DataStack?
 
     lazy var dataSource: DATASource = {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Event")
@@ -30,7 +30,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         self.tableView.dataSource = self.dataSource
     }
 
-    func insertNewObject() {
+    @objc func insertNewObject() {
         self.dataStack?.performBackgroundTask { backgroundContext in
             let newManagedObject = NSEntityDescription.insertNewObject(forEntityName: "Event", into: backgroundContext)
             newManagedObject.setValue(Date(), forKey: "timeStamp")
