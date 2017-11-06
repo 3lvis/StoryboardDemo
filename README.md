@@ -1,3 +1,3 @@
-# StoryboardDATASourceAndDataStackDemo
+# StoryboardDemo
 
-Simple project to show how to use DATASource and DATAStack with Storyboards.
+Sample project to show how to use DATASource and DataStack with Storyboards.
